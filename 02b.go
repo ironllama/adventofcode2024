@@ -1,16 +1,15 @@
 package main
 
 import (
-	"os"
-	"log"
 	"bufio"
-	"strings"
-	"strconv"
+	"log"
 	"math"
+	"os"
+	"strconv"
+	"strings"
 )
 
-
-func arrayDelete (slice []int, i int) []int {
+func arrayDelete(slice []int, i int) []int {
 	return append(slice[:i], slice[i+1:]...)
 }
 
@@ -41,8 +40,8 @@ func main() {
 				math.Abs(float64(diff)) > 3 ||
 				(sign < 0 && diff > 0) ||
 				(sign > 0 && diff < 0) {
-					return false
-				}
+				return false
+			}
 		}
 
 		return true
@@ -50,7 +49,8 @@ func main() {
 
 	scanner := bufio.NewScanner(file)
 	numSafe := 0
-	outer: for scanner.Scan() {
+outer:
+	for scanner.Scan() {
 		line := scanner.Text()
 		tokens := strings.Fields(line)
 		// log.Println("TOKENS:", tokens)
@@ -58,17 +58,17 @@ func main() {
 		// Convert string array to integer array
 		var nums []int
 		for _, s := range tokens {
-			i, _ := strconv.Atoi(s)  // Ignoring errs
+			i, _ := strconv.Atoi(s) // Ignoring errs
 			nums = append(nums, i)
 		}
 
 		// Remove one from the array and test to see if it's safe
 		// Only need one safe combo to continue to next line
 		for i := 0; i < len(nums); i++ {
-			newNums := make([]int, len(nums))  // Allocate destination array
-			copy(newNums, nums[:])  // Run the copy
+			newNums := make([]int, len(nums)) // Allocate destination array
+			copy(newNums, nums[:])            // Run the copy
 			// log.Println("NEW:", newNums, "ORIG:", nums)
-			if (arraySafe(arrayDelete(newNums, i))) {
+			if arraySafe(arrayDelete(newNums, i)) {
 				// log.Println("SAFE")
 				numSafe += 1
 				continue outer

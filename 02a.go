@@ -1,12 +1,12 @@
 package main
 
 import (
-	"os"
-	"log"
 	"bufio"
-	"strings"
-	"strconv"
+	"log"
 	"math"
+	"os"
+	"strconv"
+	"strings"
 )
 
 func main() {
@@ -19,7 +19,8 @@ func main() {
 
 	numSafe := 0
 	scanner := bufio.NewScanner(file)
-	outerloop: for scanner.Scan() {
+outerloop:
+	for scanner.Scan() {
 		line := scanner.Text()
 		tokens := strings.Fields(line)
 		// log.Println("TOKENS:", tokens)
@@ -27,7 +28,7 @@ func main() {
 		// Convert string array to integer array
 		var nums []int
 		for _, s := range tokens {
-			i, _ := strconv.Atoi(s)  // Ignoring errs, heh
+			i, _ := strconv.Atoi(s) // Ignoring errs, heh
 			nums = append(nums, i)
 		}
 
@@ -47,9 +48,9 @@ func main() {
 				math.Abs(float64(diff)) > 3 ||
 				(sign < 0 && diff > 0) ||
 				(sign > 0 && diff < 0) {
-					// log.Println("UNSAFE")
-					continue outerloop
-				}
+				// log.Println("UNSAFE")
+				continue outerloop
+			}
 		}
 		// log.Println("SAFE")
 		numSafe += 1
