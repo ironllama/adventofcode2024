@@ -13,6 +13,12 @@ func arrayDelete(slice []int, i int) []int {
 	return append(slice[:i], slice[i+1:]...)
 }
 
+func arrayCopy(orig []int) []int {
+	newNums := make([]int, len(orig)) // Create a dynamically sized view
+	copy(newNums, orig[:])            // Run the copy
+	return newNums
+}
+
 func main() {
 	// file, err := os.Open("02.sam")
 	file, err := os.Open("02.txt")
@@ -68,30 +74,10 @@ func main() {
 	part1 := func() int {
 		numSafe := 0
 
-	outer:
 		for _, nums := range input {
-			sign := 0
-			for i := 0; i < (len(nums) - 1); i++ { // Ignore last, since we compare i+1
-				diff := nums[i] - nums[i+1]
-
-				if sign == 0 {
-					if diff > 0 {
-						sign = 1
-					} else {
-						sign = -1
-					}
-				}
-
-				if diff == 0 ||
-					math.Abs(float64(diff)) > 3 ||
-					(sign < 0 && diff > 0) ||
-					(sign > 0 && diff < 0) {
-					// log.Println("UNSAFE")
-					continue outer
-				}
+			if arraySafe(nums) {
+				numSafe += 1
 			}
-			// log.Println("SAFE")
-			numSafe += 1
 		}
 
 		return numSafe
@@ -105,8 +91,7 @@ func main() {
 			// Remove one from the array and test to see if it's safe
 			// Only need one safe combo to continue to next line
 			for i := 0; i < len(nums); i++ {
-				newNums := make([]int, len(nums)) // Allocate destination array
-				copy(newNums, nums[:])            // Run the copy
+				newNums := arrayCopy(nums[:]) // Send as a view to send by ref?
 				// log.Println("NEW:", newNums, "ORIG:", nums)
 				if arraySafe(arrayDelete(newNums, i)) {
 					// log.Println("SAFE")
