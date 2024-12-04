@@ -39,15 +39,36 @@ func main() {
 		}
 	}
 
-	sort.Ints(left[:])
-	sort.Ints(right[:])
+	part1 := func() int {
+		sort.Ints(left[:])
+		sort.Ints(right[:])
 
-	// Find the diffs and add them up
-	var sum int = 0
-	for i := 0; i < len(left); i++ {
-		d := int(math.Abs(float64((right[i] - left[i])))) // math.Abs operates on floats
-		sum += d
+		// Find the diffs and add them up
+		var sum int = 0
+		for i := 0; i < len(left); i++ {
+			d := int(math.Abs(float64((right[i] - left[i])))) // math.Abs operates on floats
+			sum += d
+		}
+
+		return sum
 	}
 
-	log.Println("FINAL:", sum)
+	part2 := func() int {
+		var sum int = 0
+		for i := 0; i < len(left); i++ {
+			var occurs int = 0
+			for k := 0; k < len(right); k++ {
+				if left[i] == right[k] {
+					occurs += 1
+				}
+			}
+			// log.Println("FOUND:", left[i], occurs)
+			sum += (occurs * left[i])
+		}
+
+		return sum
+	}
+
+	log.Println("Part1:", part1())
+	log.Println("Part2:", part2())
 }
