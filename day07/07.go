@@ -1,26 +1,15 @@
 package main
 
 import (
+	"aoc2024/utils"
 	"bufio"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
-
-func grow(o int, subs []int) []int {
-	var newSubs []int
-	for _, s := range subs {
-		newSubs = append(newSubs, s+o)
-
-		if s == 0 {
-			s = 1
-		}
-		newSubs = append(newSubs, s*o)
-	}
-	return newSubs
-}
 
 func main() {
 	allGoals := []int{}
@@ -46,8 +35,9 @@ func main() {
 	}
 
 	part1 := func() {
-		total := 0
+		defer utils.TimeTrack(time.Now(), "part1")
 
+		total := 0
 		for i, operands := range allOperands {
 			subs := []int{operands[0]}
 			for _, o := range operands[1:] {
@@ -77,8 +67,9 @@ func main() {
 	part1()
 
 	part2 := func() {
-		total := 0
+		defer utils.TimeTrack(time.Now(), "part1")
 
+		total := 0
 		for i, operands := range allOperands {
 			subs := []int{operands[0]}
 			for _, o := range operands[1:] {
