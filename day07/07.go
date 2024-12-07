@@ -90,6 +90,8 @@ func main() {
 						s = 1
 					}
 					newSubs = append(newSubs, s*o)
+
+					// This is the only logic added to part 2... additional operation (||)
 					ni, _ := strconv.Atoi(fmt.Sprintf("%d%d", s, o))
 					newSubs = append(newSubs, ni)
 				}
