@@ -3,3 +3,4 @@
 *.mjs
 *.log
 *.out
+tmp/
