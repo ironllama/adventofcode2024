@@ -186,3 +186,21 @@ func (pq *PriorityQueue) Update(item *Item, value int, priority int) {
 	item.Priority = priority
 	heap.Fix(pq, item.index)
 }
+
+// ============================================================================
+// Very bare-bones cache, based on a map
+type SomeFunc func(string) int
+
+func Memorized(fn SomeFunc) SomeFunc {
+	cache := make(map[string]int)
+
+	return func(input string) int {
+		if val, found := cache[input]; found {
+			return val
+		}
+
+		result := fn(input)
+		cache[input] = result
+		return result
+	}
+}
